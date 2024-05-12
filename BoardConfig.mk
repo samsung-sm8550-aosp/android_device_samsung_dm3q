@@ -18,17 +18,16 @@ TARGET_SCREEN_DENSITY := 500
 # Kernel
 TARGET_KERNEL_CONFIG := dm3q_defconfig
 
-BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
-
 # Kernel Modules
+BOARD_SYSTEM_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/modules.load.system_dlkm))
 BOARD_SYSTEM_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.system_dlkm))
-BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE := $(DEVICE_PATH)/modules.blocklist
 BOARD_VENDOR_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load))
-BOARD_VENDOR_RAMDISK_KERNEL_MODULES_BLOCKLIST_FILE := $(BOARD_VENDOR_KERNEL_MODULES_BLOCKLIST_FILE)
 BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.vendor_boot))
 BOARD_VENDOR_RAMDISK_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.recovery))
+BOARD_RECOVERY_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.recovery))
 BOOT_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/modules.load.recovery $(DEVICE_PATH)/modules.include.vendor_ramdisk))
-SYSTEM_KERNEL_MODULES := $(strip $(shell cat $(DEVICE_PATH)/modules.include.system_dlkm))
+BOARD_RECOVERY_RAMDISK_KERNEL_MODULES_LOAD := $(strip $(shell cat $(DEVICE_PATH)/modules.load.recovery))
+RECOVERY_KERNEL_MODULES := $(BOARD_RECOVERY_RAMDISK_KERNEL_MODULES_LOAD)
 
 TARGET_KERNEL_EXT_MODULES := \
     qcom/opensource/mmrm-driver \
@@ -54,6 +53,9 @@ TARGET_KERNEL_EXT_MODULES := \
     qcom/opensource/wlan/platform \
     qcom/opensource/wlan/qcacld-3.0/.kiwi_v2 \
     qcom/opensource/bt-kernel
+
+# Vendor props
+TARGET_VENDOR_PROP += $(DEVICE_PATH)/vendor.prop
 
 # Include the proprietary files BoardConfig.
 include vendor/samsung/dm3q/BoardConfigVendor.mk

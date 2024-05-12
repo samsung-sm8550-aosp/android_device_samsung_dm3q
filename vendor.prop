@@ -3,4 +3,4 @@ bluetooth.device.default_name=Galaxy S23 ULTRA
 
 # Fingerprint
 ro.vendor.fingerprint.type=udfps
-ro.vendor.fingerprint.sensor_location=540|1739|91
+ro.vendor.fingerprint.sensor_location=720|2350|91
